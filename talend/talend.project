@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:TalendProperties="http://www.talend.org/properties">
-  <TalendProperties:Project xmi:id="_4jTP0cbxEeihBpppIcL8RQ" label="off-import" description="" language="java" technicalLabel="OFF_IMPORT" local="true" author="_4lBuIMbxEeihBpppIcL8RQ" productVersion="Talend Open Studio for Big Data-7.0.1.20180411_1414" itemsRelationVersion="1.3">
+  <TalendProperties:Project xmi:id="_4jTP0cbxEeihBpppIcL8RQ" label="off" description="" language="java" technicalLabel="OFF" local="true" author="_4lBuIMbxEeihBpppIcL8RQ" productVersion="Talend Open Studio for Big Data-7.0.1.20180411_1414" itemsRelationVersion="1.3">
     <technicalStatus xmi:id="_4rWYkMbxEeihBpppIcL8RQ" label="development" code="DEV"/>
     <technicalStatus xmi:id="_4rWYkcbxEeihBpppIcL8RQ" label="testing" code="TEST"/>
     <technicalStatus xmi:id="_4rWYksbxEeihBpppIcL8RQ" label="production" code="PROD"/>
@@ -85,24 +85,6 @@
         <elementParameter xmi:id="_-qaYBMbxEeihBpppIcL8RQ" field="TECHNICAL" name="PROPERTY_TYPE_IMPLICIT_CONTEXT:REPOSITORY_PROPERTY_TYPE" value="" contextMode="false"/>
       </parameters>
     </implicitContextSettings>
-    <ItemsRelations xmi:id="_UwVQ0MbzEeihBpppIcL8RQ">
-      <baseItem xmi:id="_UwVQ0cbzEeihBpppIcL8RQ" id="_QKNNUGZ8EeWm5YvsrIoYzQ" version="0.1" type="job"/>
-      <relatedItems xmi:id="_UwVQ0sbzEeihBpppIcL8RQ" id="SQLike" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ08bzEeihBpppIcL8RQ" id="Numeric" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ1MbzEeihBpppIcL8RQ" id="TalendString" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ1cbzEeihBpppIcL8RQ" id="DemoRoutines" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ1sbzEeihBpppIcL8RQ" id="DataOperation" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ18bzEeihBpppIcL8RQ" id="StringHandling" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ2MbzEeihBpppIcL8RQ" id="TalendDataGenerator" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ2cbzEeihBpppIcL8RQ" id="DqStringHandling" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ2sbzEeihBpppIcL8RQ" id="TalendDate" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ28bzEeihBpppIcL8RQ" id="DataQuality" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ3MbzEeihBpppIcL8RQ" id="Mathematical" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ3cbzEeihBpppIcL8RQ" id="Relational" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ3sbzEeihBpppIcL8RQ" id="DQTechnical" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ38bzEeihBpppIcL8RQ" id="GetRandomPhoneNum" version="Latest" type="routine"/>
-      <relatedItems xmi:id="_UwVQ4MbzEeihBpppIcL8RQ" id="MDM" version="Latest" type="routine"/>
-    </ItemsRelations>
     <ItemsRelations xmi:id="_P-QMcMb0EeihBpppIcL8RQ">
       <baseItem xmi:id="_P-QzgMb0EeihBpppIcL8RQ" id="_lu2ncMbzEeihBpppIcL8RQ" version="0.1" type="job"/>
       <relatedItems xmi:id="_P-Qzgcb0EeihBpppIcL8RQ" id="Numeric" version="Latest" type="routine"/>
@@ -114,8 +96,8 @@
       <relatedItems xmi:id="_P-Qzh8b0EeihBpppIcL8RQ" id="TalendDataGenerator" version="Latest" type="routine"/>
       <relatedItems xmi:id="_P-QziMb0EeihBpppIcL8RQ" id="TalendDate" version="Latest" type="routine"/>
       <relatedItems xmi:id="_P-Qzicb0EeihBpppIcL8RQ" id="Mathematical" version="Latest" type="routine"/>
+      <relatedItems xmi:id="_wcqe0MfAEeiRXq4bHhEm-A" id="ToBqt" version="Latest" type="routine"/>
     </ItemsRelations>
-    <deletedFolders>process/demo</deletedFolders>
     <migrationTask xmi:id="_4no9QMbxEeihBpppIcL8RQ" id="org.talend.designer.core.generic.model.migration.ChangeDriverJarForProjectSetting" breaks="7.0.1" version="7.0.1" status="ok"/>
     <migrationTask xmi:id="_4no9QcbxEeihBpppIcL8RQ" id="org.talend.designer.core.ui.preferences.migration.ChangeMysqlVersionForProjectSetting" breaks="5.2.0" version="5.1.3" status="ok"/>
     <migrationTask xmi:id="_4no9QsbxEeihBpppIcL8RQ" id="org.talend.designer.core.ui.preferences.migration.ChangeOracleVersionForProjectSetting" breaks="5.2.0" version="5.2.1" status="ok"/>
