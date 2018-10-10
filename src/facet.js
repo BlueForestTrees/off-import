@@ -11,7 +11,7 @@ export const toFacet = (quantity, trunkId, off, entries, keys, writes) => {
         const facetId = entry._id
         const _100g = nutriments[externId + "_100g"]
         if (!isNil(_100g)) {
-            // Curieux les coefs sont les mêmes pour l'énergie et pour les masses, on garde un seul code :)
+            // Les coefs sont les mêmes pour l'énergie et pour les masses, on garde un seul code :)
             // autres
             // Mass: x g/100g => y kg/1kg => y = x * 0.01
             // Volu: x g/100ml => y kg/1m3 => y = x * 10
