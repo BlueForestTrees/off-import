@@ -1,6 +1,6 @@
 import client from "request-promise-native"
 import env from "./env"
-import {object} from "mongo-registry"
+import {object, createObjectId} from "mongo-registry"
 
 const debug = require('debug')('api:import')
 
@@ -17,3 +17,13 @@ export const getOffUserId = async () => {
         return object(ademeUser._id)
     }
 }
+
+export const getOffCat = (col, offUserId) =>
+    col.findOne({oid: offUserId, name: "Open Food Fact", pid: null})
+        .then(offCat => {
+            if (!offCat) {
+                offCat = {_id: createObjectId(), oid: offUserId, pid: null, name: "Open Food Fact", color: "#c99622"}
+                col.insertOne(offCat)
+            }
+            return offCat._id
+        })

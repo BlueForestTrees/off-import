@@ -3,7 +3,7 @@ import {toBqt} from "./quantity"
 import {createObjectId} from "mongo-registry"
 import {toTrunk} from "./trunk"
 import {toFacet} from "./facet"
-import {getOffUserId} from "./api"
+import {getOffCat, getOffUserId} from "./api"
 import {importEntries} from "./entries"
 
 const debug = require('debug')('api:off-import')
@@ -14,12 +14,14 @@ const getTrunkId = async (trunks, off) => {
 }
 
 export const offImport = async ([offDb, bfDb]) => {
-    let offCol = offDb.collection(cols.OFF)
-    let trunks = bfDb.collection(cols.TRUNK)
-    let facets = bfDb.collection(cols.FACET)
     await importEntries(await bfDb.collection(cols.FACET_ENTRY))
-    let facetEntries = (await bfDb.collection(cols.FACET_ENTRY).find({}).toArray()).reduce((res, fe) => (res[fe.externId] = fe) && res, {})
-    let oid = await getOffUserId()
+
+    const offCol = offDb.collection(cols.OFF)
+    const trunks = bfDb.collection(cols.TRUNK)
+    const facets = bfDb.collection(cols.FACET)
+    const facetEntries = (await bfDb.collection(cols.FACET_ENTRY).find({}).toArray()).reduce((res, fe) => (res[fe.externId] = fe) && res, {})
+    const oid = await getOffUserId()
+    const c0 = await getOffCat(bfDb.collection(cols.CATEGORIES), oid)
     let entryKeys = Object.keys(facetEntries)
 
     const offFields = {lc: 1, images: 1, code: 1, stores: 1, countries_tags: 1, last_modified_t: 1, quantity: 1, categories_hierarchy: 1, nutriments: 1, product_name: 1, generic_name: 1}
@@ -59,7 +61,7 @@ export const offImport = async ([offDb, bfDb]) => {
                         facetBuffer = []
                     }
 
-                    trunkBuffer.push(toTrunk(_id, off, quantity, oid))
+                    trunkBuffer.push(toTrunk(_id, off, quantity, oid, c0))
                     if (trunkBuffer.length === bufferSize) {
                         await trunks.bulkWrite(trunkBuffer, {ordered: false})
                         trunkBuffer = []

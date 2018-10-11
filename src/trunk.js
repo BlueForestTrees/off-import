@@ -10,7 +10,7 @@ const getRandomColor = () => {
     return color
 }
 
-export const toTrunk = (_id, off, quantity, oid) => ({
+export const toTrunk = (_id, off, quantity, oid, c0) => ({
     updateOne: {
         filter: {externId: off._id},
         update: {
@@ -24,7 +24,8 @@ export const toTrunk = (_id, off, quantity, oid) => ({
                 categories_tags: off.categories_tags,
                 categories_hierarchy: off.categories_hierarchy,
                 photo: toPhoto(off),
-                color: getRandomColor()
+                color: getRandomColor(),
+                cat: {c0}
             },
             $setOnInsert: {
                 _id
