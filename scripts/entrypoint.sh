@@ -11,7 +11,3 @@ if [[ $STARTUP_DELAY ]]; then
   echo "Delaying startup for $STARTUP_DELAY seconds..."
   sleep $STARTUP_DELAY
 fi
-
-# Start app
-echo "=> Starting app on port $PORT..."
-exec "$@"

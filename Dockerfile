@@ -17,20 +17,15 @@ COPY --from=api-builder /build/package.json ./
 COPY --from=api-builder /build/dist/js ./
 COPY --from=api-builder /build/node_modules ./node_modules
 COPY ./scripts ./scripts
-
-
-# add entrypoint and build scripts
 RUN chmod -R 770 ./scripts
 
 # install base dependencies, build app, cleanup
 RUN bash scripts/install-deps.sh && \
 	bash scripts/install-node.sh
 
-#USER node
-
 # start the app
 ENTRYPOINT ["./scripts/entrypoint.sh"]
-CMD ["node", "run", "start"]
+CMD ["npm", "run", "start"]
 
 #sudo mkdir -p /var/lib/trees/off/targz
 #sudo mkdir -p /var/lib/trees/off/unzipped
