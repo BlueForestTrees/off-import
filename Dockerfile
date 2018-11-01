@@ -16,7 +16,7 @@ RUN groupadd -r node && useradd -m -g node node
 COPY --from=api-builder /build/package.json ./
 COPY --from=api-builder /build/dist/js ./
 COPY --from=api-builder /build/node_modules ./node_modules
-COPY ./scripts .
+COPY ./scripts ./scripts
 
 
 # add entrypoint and build scripts
