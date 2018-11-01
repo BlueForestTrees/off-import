@@ -32,6 +32,6 @@ mongorestore --collection TrunkOff --db off dump/off/products.bson
 printf "rm -rf ./dump"
 rm -rf ./dump
 
-#import bf
-printf "npm run start"
-npm run start
+##import bf
+#printf "npm run start"
+#npm run start
