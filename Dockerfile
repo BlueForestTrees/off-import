@@ -16,7 +16,7 @@ RUN groupadd -r node && useradd -m -g node node
 COPY --from=api-builder /build/package.json ./
 COPY --from=api-builder /build/dist/js ./
 COPY --from=api-builder /build/node_modules ./node_modules
-COPY ./scripts ./scripts
+COPY ./scripts .
 
 
 # add entrypoint and build scripts
@@ -29,7 +29,7 @@ RUN bash scripts/install-deps.sh && \
 USER node
 
 # start the app
-ENTRYPOINT [".scripts/entrypoint.sh"]
+ENTRYPOINT ["./scripts/entrypoint.sh"]
 CMD ["node", "run", "start"]
 
 #sudo mkdir -p /var/lib/trees/off/targz
