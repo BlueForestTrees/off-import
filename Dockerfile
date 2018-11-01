@@ -25,7 +25,7 @@ RUN bash scripts/install-deps.sh && \
 
 # start the app
 ENTRYPOINT ["./scripts/entrypoint.sh"]
-CMD ["npm", "run", "start"]
+CMD ["./scripts/etl.sh"]
 
 #sudo mkdir -p /var/lib/trees/off/targz
 #sudo mkdir -p /var/lib/trees/off/unzipped
