@@ -30,7 +30,7 @@ RUN bash scripts/install-deps.sh && \
 USER node
 
 # start the app
-ENTRYPOINT ["./scripts/entrypoint.sh"]
+ENTRYPOINT ["sh", "./scripts/entrypoint.sh"]
 CMD ["node", "run", "start"]
 
 #sudo mkdir -p /var/lib/trees/off/targz
