@@ -14,6 +14,7 @@ RUN chmod -R 770 $BUILD_SCRIPTS_DIR
 
 # install base dependencies, build app, cleanup
 RUN cd $BUILD_SCRIPTS_DIR && \
+        bash $BUILD_SCRIPTS_DIR/install-deps.sh && \
 		bash $BUILD_SCRIPTS_DIR/install-node.sh
 
 
