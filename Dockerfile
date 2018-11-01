@@ -11,7 +11,7 @@ RUN npm run build
 
 FROM mongo:3.6.5
 ENV NODE_VERSION 10.12.0
-RUN groupadd -r node && useradd -m -g node node
+#RUN groupadd -r node && useradd -m -g node node
 
 COPY --from=api-builder /build/package.json ./
 COPY --from=api-builder /build/dist/js ./
@@ -21,16 +21,15 @@ COPY ./scripts ./scripts
 
 # add entrypoint and build scripts
 RUN chmod -R 770 ./scripts
-RUN chmod -R +x ./scripts
 
 # install base dependencies, build app, cleanup
 RUN bash scripts/install-deps.sh && \
 	bash scripts/install-node.sh
 
-USER node
+#USER node
 
 # start the app
-ENTRYPOINT ["sh", "./scripts/entrypoint.sh"]
+ENTRYPOINT ["./slcripts/entrypoint.sh"]
 CMD ["node", "run", "start"]
 
 #sudo mkdir -p /var/lib/trees/off/targz
