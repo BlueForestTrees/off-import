@@ -1,4 +1,17 @@
+FROM node:alpine AS api-builder
+
+RUN mkdir -p /build
+COPY package.json ./build/
+COPY src ./build/src
+
+WORKDIR /build
+RUN npm install
+RUN npm run build
+
 FROM mongo:3.6.5
+COPY --from=api-builder /build/package.json ./
+COPY --from=api-builder /build/dist/js ./
+COPY --from=api-builder /build/node_modules ./node_modules
 
 RUN groupadd -r node && useradd -m -g node node
 
@@ -15,16 +28,6 @@ RUN chmod -R 770 $BUILD_SCRIPTS_DIR
 RUN cd $BUILD_SCRIPTS_DIR && \
         bash $BUILD_SCRIPTS_DIR/install-deps.sh && \
 		bash $BUILD_SCRIPTS_DIR/install-node.sh
-
-
-
-RUN mkdir -p /build
-COPY package.json ./build/
-COPY src ./build/src
-
-WORKDIR /build
-RUN npm install
-RUN npm run build
 
 # start the app
 ENTRYPOINT ["./entrypoint.sh"]
