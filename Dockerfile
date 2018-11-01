@@ -29,6 +29,8 @@ RUN cd $BUILD_SCRIPTS_DIR && \
         bash $BUILD_SCRIPTS_DIR/install-deps.sh && \
 		bash $BUILD_SCRIPTS_DIR/install-node.sh
 
+WORKDIR $BUILD_SCRIPTS_DIR
+
 # start the app
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["node", "run", "start"]
