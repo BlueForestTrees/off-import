@@ -2,7 +2,7 @@
 
 set -e
 
-printf "\n[-] Installing base OS dependencies...\n\n"
+printf "\n[-] Update, installing curl...\n\n"
 
 apt-get update -y
 

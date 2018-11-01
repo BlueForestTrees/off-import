@@ -4,11 +4,7 @@ import {version, name} from './../package.json'
 const ENV = {
     NAME: name,
 
-    DB_HOST_OFF: process.env.DB_HOST_OFF || "localhost",
     DB_NAME_OFF: process.env.DB_NAME_OFF || "off",
-    DB_PORT_OFF: process.env.DB_PORT || 27017,
-    DB_USER_OFF: process.env.DB_USER || "doudou",
-    DB_PWD_OFF: process.env.DB_PWD || "masta",
 
     DB_HOST: process.env.DB_HOST || "localhost",
     DB_NAME: process.env.DB_NAME || "BlueForestTreesDB",
