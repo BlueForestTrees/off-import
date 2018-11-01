@@ -2,8 +2,7 @@ FROM mongo:3.6.5
 
 RUN groupadd -r node && useradd -m -g node node
 
-ENV NODE_VERSION 8.4.0
-ENV GOSU_VERSION 1.10
+ENV NODE_VERSION 10.12.0
 
 # build directories
 ENV BUILD_SCRIPTS_DIR /opt/build_scripts
