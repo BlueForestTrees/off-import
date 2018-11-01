@@ -21,6 +21,7 @@ COPY ./scripts ./scripts
 
 # add entrypoint and build scripts
 RUN chmod -R 770 ./scripts
+RUN chmod -R +x ./scripts
 
 # install base dependencies, build app, cleanup
 RUN bash scripts/install-deps.sh && \
