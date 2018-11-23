@@ -55,13 +55,13 @@ export const offImport = async ([offDb, bfDb]) => {
                 if (facetsCount > 0) {
                     trunkWithFacetCount++
                     if (facetBuffer.length >= bufferSize) {
-                        // debug("write %o facetsCount", facetBuffer.length)
                         writenFacets += facetBuffer.length
                         await facets.bulkWrite(facetBuffer, {ordered: false})
                         facetBuffer = []
                     }
 
-                    trunkBuffer.push(toTrunk(_id, off, quantity, oid, c0))
+                    let trunk = toTrunk(_id, off, quantity, oid, c0)
+                    trunkBuffer.push(trunk)
                     if (trunkBuffer.length === bufferSize) {
                         await trunks.bulkWrite(trunkBuffer, {ordered: false})
                         trunkBuffer = []
