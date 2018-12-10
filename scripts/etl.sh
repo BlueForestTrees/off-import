@@ -10,6 +10,7 @@ apt-get install -y --no-install-recommends curl
 printf "\ncurl https://world.openfoodfacts.org/data/openfoodfacts-mongodbdump.tar.gz --output off.tar.gz"
 curl https://world.openfoodfacts.org/data/openfoodfacts-mongodbdump.tar.gz --output off.tar.gz --output off.tar.gz
 
+
 #extract
 printf "tar -zxvf off.tar.gz"
 tar -zxvf off.tar.gz
