@@ -1,5 +1,8 @@
 #!/bin/ash
 
+echo "stat node/js/index.js"
+stat node/js/index.js
+
 #download
 echo "wget -O off.tar.gz https://world.openfoodfacts.org/data/openfoodfacts-mongodbdump.tar.gz"
 wget -O off.tar.gz https://world.openfoodfacts.org/data/openfoodfacts-mongodbdump.tar.gz
