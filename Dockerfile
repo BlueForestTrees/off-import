@@ -1,7 +1,5 @@
 FROM node:alpine
 
-RUN mkdir -p /build
-
 COPY package.json .
 COPY src ./src
 COPY off-import.sh ./off-import.sh
