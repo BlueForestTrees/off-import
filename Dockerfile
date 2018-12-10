@@ -4,7 +4,7 @@ RUN mkdir -p /build
 COPY package.json ./build/
 COPY src ./build/src
 COPY off-import.sh ./off-import.sh
-RUN chmod -R 770 ./scripts
+RUN chmod -R 770 ./off-import.sh
 
 WORKDIR /build
 RUN npm install
