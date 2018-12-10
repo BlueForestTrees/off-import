@@ -10,4 +10,4 @@ WORKDIR /build
 RUN npm install
 RUN npm run build
 
-ENTRYPOINT ["./scripts/etl.sh"]
+CMD ["./scripts/etl.sh"]
