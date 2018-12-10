@@ -10,4 +10,4 @@ RUN chmod -R 770 ./off-import.sh
 RUN npm install
 RUN npm run build
 
-CMD ["./off-import.sh"]
+ENTRYPOINT ["./off-import.sh"]
