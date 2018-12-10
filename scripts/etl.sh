@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
+#deps
+set -e
+printf "\n[-] Update, installing curl...\n\n"
+apt-get update -y
+apt-get install -y --no-install-recommends curl
+
 #download
 printf "\ncurl https://world.openfoodfacts.org/data/openfoodfacts-mongodbdump.tar.gz --output off.tar.gz"
-curl curl https://world.openfoodfacts.org/data/openfoodfacts-mongodbdump.tar.gz --output off.tar.gz --output off.tar.gz
+curl https://world.openfoodfacts.org/data/openfoodfacts-mongodbdump.tar.gz --output off.tar.gz --output off.tar.gz
 
 #extract
 printf "tar -zxvf off.tar.gz"
