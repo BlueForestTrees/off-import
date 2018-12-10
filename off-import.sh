@@ -1,6 +1,6 @@
 #!/bin/ash
 
-echo "stat node/js/index.js"
+echo "stat dist/js/index.js"
 stat node/js/index.js
 
 #download
