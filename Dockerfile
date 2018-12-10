@@ -10,4 +10,4 @@ WORKDIR /build
 RUN npm install
 RUN npm run build
 
-CMD ["./off-import.sh"]
+CMD ["/off-import.sh"]
