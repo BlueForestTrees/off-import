@@ -16,7 +16,7 @@ Promise
             .then(client => client.db(ENV.DB_NAME_OFF)))
             .catch(e => console.error("connexion OFF", e)),
 
-        Promise.resolve(`mongodb://${auth(ENV)}${ENV.DB_HOST}:${ENV.DB_PORT}/${ENV.DB_NAME}?authSource=admin`)
+        Promise.resolve(ENV.DB_CONNECTION_STRING || `mongodb://${auth(ENV)}${ENV.DB_HOST}:${ENV.DB_PORT}/${ENV.DB_NAME}?authSource=admin`)
             .then(connChain => console.log(`BF: ${connChain}`) || connChain)
             .then(connChain => mongodb.MongoClient.connect(connChain, {useNewUrlParser: true})
             .then(client => client.db(ENV.DB_NAME)))

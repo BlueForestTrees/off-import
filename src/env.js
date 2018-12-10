@@ -10,6 +10,7 @@ const ENV = {
     DB_USER_OFF: process.env.DB_USER_OFF || "",
     DB_PWD_OFF: process.env.DB_PWD_OFF || "",
 
+    DB_CONNECTION_STRING: process.env.DB_CONNECTION_STRING,
     DB_HOST: process.env.DB_HOST || "localhost",
     DB_NAME: process.env.DB_NAME || "BlueForestTreesDB",
     DB_PORT: process.env.DB_PORT || 27017,
