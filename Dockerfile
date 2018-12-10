@@ -1,4 +1,4 @@
-FROM node:alpine AS api-builder
+FROM node:alpine
 
 RUN mkdir -p /build
 
