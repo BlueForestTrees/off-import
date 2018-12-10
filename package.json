@@ -6,8 +6,8 @@
   "author": "slim <smedini@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node dist/js/index.js",
-    "build": "rimraf dist && babel src --out-dir dist/js",
+    "start": "node dist/index.js",
+    "build": "rimraf dist && babel src --out-dir dist",
     "dev": "node --version && cross-env NODE_ENV=development DEBUG=api:* babel-node src/index.js",
     "test": "cross-env DEBUG=api:*,test:* NODE_ENV=test mocha --recursive --exit \"test/**/*.js\""
   },
