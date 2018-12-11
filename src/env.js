@@ -4,6 +4,8 @@ import {version, name} from './../package.json'
 const ENV = {
     NAME: name,
 
+    IMPORT_FILTER: process.env.IMPORT_FILTER || '{}',
+
     DB_HOST_OFF: process.env.DB_HOST_OFF || "localhost",
     DB_NAME_OFF: process.env.DB_NAME_OFF || "off",
     DB_PORT_OFF: process.env.DB_PORT_OFF || 27017,

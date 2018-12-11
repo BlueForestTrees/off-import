@@ -5,6 +5,7 @@ import {toTrunk} from "./trunk"
 import {toFacet} from "./facet"
 import {getOffCat, getOffUserId} from "./api"
 import {importEntries} from "./entries"
+import ENV from './env'
 
 const debug = require('debug')('api:off-import')
 
@@ -14,6 +15,7 @@ const getTrunkId = async (trunks, off) => {
 }
 
 export const offImport = async ([offDb, bfDb]) => {
+    const filter = JSON.parse(ENV.IMPORT_FILTER)
     await importEntries(await bfDb.collection(cols.FACET_ENTRY))
 
     const offCol = offDb.collection(cols.OFF)
@@ -35,7 +37,7 @@ export const offImport = async ([offDb, bfDb]) => {
     let facetsCount = 0
     let bufferSize = 2000
 
-    const cursor = offCol.find({}, offFields)
+    const cursor = offCol.find(filter, offFields)
 
     while (await cursor.hasNext()) {
         const off = await cursor.next()

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#wget
+apt-get update
+apt-get install wget
+
 #download
 echo "wget -O off.tar.gz https://world.openfoodfacts.org/data/openfoodfacts-mongodbdump.tar.gz"
 wget -O off.tar.gz https://world.openfoodfacts.org/data/openfoodfacts-mongodbdump.tar.gz
@@ -20,6 +24,9 @@ mongorestore --collection TrunkOff --db off dump/off/products.bson
 echo "rm -rf ./dump"
 rm -rf ./dump
 
-#import bf
-echo "npm run start"
-npm run start
+echo "download-off done"
+
+#cat > import.log
+#chmod +x import.log
+#nohup /import.sh > /import.log 2>&1 &
+#jobs => liste les processus en Arrière plan
