@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/bash
 
 #download
 echo "wget -O off.tar.gz https://world.openfoodfacts.org/data/openfoodfacts-mongodbdump.tar.gz"
