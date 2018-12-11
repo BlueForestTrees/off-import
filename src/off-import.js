@@ -15,6 +15,8 @@ const getTrunkId = async (trunks, off) => {
 }
 
 export const offImport = async ([offDb, bfDb]) => {
+    debug("connected. start import init..")
+
     const filter = JSON.parse(ENV.IMPORT_FILTER)
     await importEntries(await bfDb.collection(cols.FACET_ENTRY))
 
@@ -36,6 +38,8 @@ export const offImport = async ([offDb, bfDb]) => {
     let facetBuffer = []
     let facetsCount = 0
     let bufferSize = 2000
+
+    debug("inited. find docs...")
 
     const cursor = offCol.find(filter, offFields)
 
