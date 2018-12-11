@@ -1,6 +1,6 @@
 const debug = require('debug')('api:off-import')
 
-const regex = /^ *(\d+) *([a-zA-Z]+)( +e? *)?$/
+const regex = /^ *(\d+) *([a-zA-Z]+)/
 
 const gs = {
     "mg": "Mass",
