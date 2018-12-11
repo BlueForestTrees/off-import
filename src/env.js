@@ -6,6 +6,7 @@ const ENV = {
 
     IMPORT_FILTER: process.env.IMPORT_FILTER || '{}',
 
+    DB_CONNECTION_STRING_OFF: process.env.DB_CONNECTION_STRING_OFF,
     DB_HOST_OFF: process.env.DB_HOST_OFF || "localhost",
     DB_NAME_OFF: process.env.DB_NAME_OFF || "off",
     DB_PORT_OFF: process.env.DB_PORT_OFF || 27017,

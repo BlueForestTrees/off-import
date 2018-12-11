@@ -10,7 +10,7 @@ const auth = ENV => (ENV.DB_USER && ENV.DB_PWD) ? (ENV.DB_USER + ":" + ENV.DB_PW
 
 Promise
     .all([
-        Promise.resolve(`mongodb://${authOff(ENV)}${ENV.DB_HOST_OFF}:${ENV.DB_PORT_OFF}/${ENV.DB_NAME_OFF}`)
+        Promise.resolve(ENV.DB_CONNECTION_STRING_OFF || `mongodb://${authOff(ENV)}${ENV.DB_HOST_OFF}:${ENV.DB_PORT_OFF}/${ENV.DB_NAME_OFF}`)
             .then(connChain => console.log(`OFF: ${connChain}`) || connChain)
             .then(connChain => mongodb.MongoClient.connect(connChain, {useNewUrlParser: true})
             .then(client => client.db(ENV.DB_NAME_OFF)))
