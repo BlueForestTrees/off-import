@@ -16,6 +16,7 @@ export const toTrunk = (_id, off, quantity, oid, c0) => ({
         update: {
             $set: {
                 externId: off._id,
+                origin: "off",
                 quantity,
                 oid,
                 name: toName(off),

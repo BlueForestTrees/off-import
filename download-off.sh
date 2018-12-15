@@ -26,7 +26,7 @@ rm -rf ./dump
 
 echo "download-off done"
 
-#cat > import.log
-#chmod +x import.log
+#cat > import.sh
+#chmod +x import.sh
 #nohup /import.sh > /import.log 2>&1 &
 #jobs => liste les processus en Arrière plan

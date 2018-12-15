@@ -1,6 +1,6 @@
 {
   "name": "off-import",
-  "version":"1.0.17",
+  "version":"1.0.18",
   "description": "service d'import OFF",
   "main": "src/index.js",
   "repository": "https://github.com/BlueForestTrees/api-import.git",
@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "rimraf dist && babel src --out-dir dist",
-    "dev": "node --version && cross-env NODE_ENV=test DEBUG=api:* babel-node src/index.js",
+    "dev": "node --version && cross-env NODE_ENV=development DEBUG=api:* babel-node src/index.js",
     "test": "cross-env DEBUG=api:*,test:* NODE_ENV=test mocha --recursive --exit \"test/**/*.js\""
   },
   "devDependencies": {
