@@ -26,6 +26,7 @@ rm -rf ./dump
 
 echo "download-off done"
 
+#dans import-mongo
 #cat > import.sh
 #chmod +x import.sh
 #nohup /import.sh > /import.log 2>&1 &
