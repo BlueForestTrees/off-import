@@ -1,9 +1,8 @@
-import {createObjectId} from "mongo-registry"
 import {isNil} from "lodash"
+import {getFacetId} from "./api"
 
-const debug = require('debug')('api:off-import:facet')
-
-export const toFacet = (quantity, trunkId, off, entries, keys, writes) => {
+export const toFacets = (quantity, trunkId, off, entries, keys) => {
+    const facets = []
     const nutriments = off.nutriments
     for (let i = 0; i < keys.length; i++) {
         const entry = entries[keys[i]]
@@ -20,7 +19,9 @@ export const toFacet = (quantity, trunkId, off, entries, keys, writes) => {
             // Volu: x kJ/100ml => y MJ/1m3 => y = y * 10
             // debug("%o tid=%o fid=%o eid=%o g/100g=%o bqt=%o %o", off._id, trunkId, facetId, externId, _100g, bqt, quantity)
             const bqt = quantity.g === "Mass" ? _100g * 0.01 : _100g * 10
-            writes.push({_id: createObjectId(),trunkId, facetId, bqt})
+            const _id = getFacetId(trunkId, facetId)
+            facets.push({_id, trunkId, facetId, bqt})
         }
     }
+    return facets
 }

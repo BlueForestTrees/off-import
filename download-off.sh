@@ -1,3 +1,10 @@
+#script ci-dessous à lancer dans import-mongo pour maj la base off. Ensuite tail -f import.log
+#cat > import.sh
+#chmod +x import.sh
+#nohup /import.sh > /import.log 2>&1 &
+#jobs => liste les processus en Arrière plan
+
+
 #!/bin/bash
 
 #wget
@@ -18,7 +25,7 @@ rm off.tar.gz
 
 #dump
 echo "mongorestore --collection TrunkOff --db off dump/off/products.bson"
-mongorestore --collection TrunkOff --db off dump/off/products.bson
+mongorestore --drop --noIndexRestore --collection TrunkOff --db off dump/off/products.bson
 
 #clean extract
 echo "rm -rf ./dump"
@@ -26,8 +33,3 @@ rm -rf ./dump
 
 echo "download-off done"
 
-#dans import-mongo
-#cat > import.sh
-#chmod +x import.sh
-#nohup /import.sh > /import.log 2>&1 &
-#jobs => liste les processus en Arrière plan

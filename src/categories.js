@@ -1,27 +1,28 @@
 import {getCatId, getOffCategories} from "./api"
+import ENV from "./env"
 
 const debug = require('debug')('api:off-import')
 
-export const importCategories = async (c0, dbCats) => {
+export const importCategories = async (c0) => {
     debug("downloading off categories...")
     const cats = (await getOffCategories())
     debug("downloading off categories OK")
     for (let k in cats) {
-        const doc = await bfCat(c0, k, cats[k], dbCats)
-        dbCats.updateOne({_id: doc._id}, {$set: doc}, {upsert: true})
+        const doc = await bfCat(c0, k, cats[k])
+        ENV.DB.cats.updateOne({_id: doc._id}, {$set: doc}, {upsert: true})
     }
 }
 
-const bfCat = async (c0, externId, offCat, dbCats) => {
+const bfCat = async (c0, externId, offCat) => {
     const bfCat = {
         externId,
-        _id: await getCatId(dbCats, externId),
+        _id: await getCatId(externId),
         name: offCat.name.fr || offCat.name.en || offCat.name.it || offCat.name.es || offCat.name.de || offCat.name.nl || offCat.name.ru,
     }
     if (offCat.parents) {
         bfCat.pids = []
         for (let i = 0; i < offCat.parents.length; i++) {
-            bfCat.pids.push(await getCatId(dbCats, offCat.parents[i]))
+            bfCat.pids.push(await getCatId(offCat.parents[i]))
         }
     } else {
         bfCat.pids = [c0]

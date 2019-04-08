@@ -1,3 +1,5 @@
+import ENV from "./env"
+
 const getRandomColor = () => {
     const letters = '0123456789ABCDEF'
     let color = '#'
@@ -7,8 +9,8 @@ const getRandomColor = () => {
     return color
 }
 
-export const importEntries = col => {
-    col.bulkWrite(
+export const importFacetEntries = () => {
+    ENV.DB.facetEntry.bulkWrite(
         [
             {updateOne: {filter: {externId: "energy"}, update: {$set: {name: "Energie", color: getRandomColor(), g: "Ene1"}}, upsert: true}},
             {updateOne: {filter: {externId: "proteins"}, update: {$set: {name: "Protéine", color: getRandomColor(), g: "Mass"}}, upsert: true}},

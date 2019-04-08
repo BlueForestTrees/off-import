@@ -7,6 +7,7 @@ const ENV = {
 
     IMPORT_FILTER: process.env.IMPORT_FILTER || '{}',
 
+    DB: {},
     DB_CONNECTION_STRING_OFF: process.env.DB_CONNECTION_STRING_OFF,
     DB_HOST_OFF: process.env.DB_HOST_OFF || "localhost",
     DB_NAME_OFF: process.env.DB_NAME_OFF || "off",
@@ -26,7 +27,11 @@ const ENV = {
 
     RK_TRUNK_UPSERT: process.env.RK_TRUNK_UPSERT || "trunk-upsert",
     RK_FACET_UPSERT: process.env.RK_FACET_UPSERT || "facet-upsert",
-    RB_PATH: process.env.RB_PATH || "mq.json"
+    RK_IMPACT_UPSERT: process.env.RK_FACET_UPSERT || "impact-upsert",
+    RB_PATH: process.env.RB_PATH || "mq.json",
+
+    PAGE_SIZE: process.env.PAGE_SIZE || 1000000,
+    PAGE: process.env.PAGE || 0
 }
 
 ENV.RB = JSON.parse(fs.readFileSync(ENV.RB_PATH, 'utf8'))

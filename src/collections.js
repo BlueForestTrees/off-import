@@ -3,5 +3,6 @@ export const cols = {
     CATEGORIES: 'CategoriesCollection',
     FACET: 'facetCollection',
     FACET_ENTRY: 'facetEntryCollection',
+    IMPACT_ENTRY: 'impactEntryCollection',
     OFF: 'TrunkOff'
 }
