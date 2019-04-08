@@ -27,3 +27,25 @@ export const getOffCat = (col, offUserId) =>
             }
             return offCat._id
         })
+
+export const getOffCategories = () => client.get("https://world.openfoodfacts.org/data/taxonomies/categories.json", {json: true})
+
+export const getTrunkId = async (trunks, off) => {
+    const trunk = await trunks.findOne({externId: off._id}, {projection: {_id: 1}})
+    return trunk ? trunk._id : createObjectId()
+}
+
+const catsCache = {}
+export const getCatId = async (cats, externId) => {
+    if (catsCache[externId]) {
+        return catsCache[externId]
+    } else {
+        const cat = await cats.findOne({externId}, {projection: {_id: 1}})
+        if (cat) {
+            catsCache[externId] = cat._id
+        } else {
+            catsCache[externId] = createObjectId()
+        }
+    }
+    return catsCache[externId]
+}

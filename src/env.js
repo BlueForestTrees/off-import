@@ -1,5 +1,6 @@
 const debug = require('debug')('api:off-import')
 import {version, name} from './../package.json'
+import fs from 'fs'
 
 const ENV = {
     NAME: name,
@@ -22,7 +23,13 @@ const ENV = {
 
     NODE_ENV: process.env.NODE_ENV || null,
     VERSION: version,
+
+    RK_TRUNK_UPSERT: process.env.RK_TRUNK_UPSERT || "trunk-upsert",
+    RK_FACET_UPSERT: process.env.RK_FACET_UPSERT || "facet-upsert",
+    RB_PATH: process.env.RB_PATH || "mq.json"
 }
+
+ENV.RB = JSON.parse(fs.readFileSync(ENV.RB_PATH, 'utf8'))
 
 ENV.USER_BASE_URL = {
     "production": process.env.USER_BASE_URL || "http://user:80",

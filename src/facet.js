@@ -20,20 +20,7 @@ export const toFacet = (quantity, trunkId, off, entries, keys, writes) => {
             // Volu: x kJ/100ml => y MJ/1m3 => y = y * 10
             // debug("%o tid=%o fid=%o eid=%o g/100g=%o bqt=%o %o", off._id, trunkId, facetId, externId, _100g, bqt, quantity)
             const bqt = quantity.g === "Mass" ? _100g * 0.01 : _100g * 10
-            writes.push({
-                updateOne: {
-                    filter: {trunkId, facetId},
-                    update: {
-                        $set: {
-                            trunkId, facetId, bqt
-                        },
-                        $setOnInsert: {
-                            _id: createObjectId()
-                        }
-                    },
-                    upsert: true
-                }
-            })
+            writes.push({_id: createObjectId(),trunkId, facetId, bqt})
         }
     }
 }

@@ -3,29 +3,27 @@ import {toBqt} from "./quantity"
 import {createObjectId} from "mongo-registry"
 import {toTrunk} from "./trunk"
 import {toFacet} from "./facet"
-import {getOffCat, getOffUserId} from "./api"
+import {getOffCat, getOffUserId, getTrunkId} from "./api"
 import {importEntries} from "./entries"
 import ENV from './env'
+import {importCategories} from "./categories"
 
 const debug = require('debug')('api:off-import')
 
-const getTrunkId = async (trunks, off) => {
-    const trunk = await trunks.findOne({externId: off._id}, {projection: {_id: 1}})
-    return trunk ? trunk._id : createObjectId()
-}
-
-export const offImport = async ([offDb, bfDb]) => {
+export const offImport = async ([offDb, bfDb, trunkSend, facetSend]) => {
     debug("connected. start import init..")
+
+    const oid = await getOffUserId()
+    const cats = bfDb.collection(cols.CATEGORIES)
+    const c0 = await getOffCat(cats, oid)
+    await importCategories(c0, cats)
 
     const filter = JSON.parse(ENV.IMPORT_FILTER)
     await importEntries(await bfDb.collection(cols.FACET_ENTRY))
 
     const offCol = offDb.collection(cols.OFF)
     const trunks = bfDb.collection(cols.TRUNK)
-    const facets = bfDb.collection(cols.FACET)
     const facetEntries = (await bfDb.collection(cols.FACET_ENTRY).find({}).toArray()).reduce((res, fe) => (res[fe.externId] = fe) && res, {})
-    const oid = await getOffUserId()
-    const c0 = await getOffCat(bfDb.collection(cols.CATEGORIES), oid)
     let entryKeys = Object.keys(facetEntries)
 
     const offFields = {lc: 1, images: 1, code: 1, stores: 1, countries_tags: 1, last_modified_t: 1, quantity: 1, categories_hierarchy: 1, nutriments: 1, product_name: 1, generic_name: 1}
@@ -57,19 +55,20 @@ export const offImport = async ([offDb, bfDb]) => {
 
                 facetsCount = facetBuffer.length
                 toFacet(quantity, _id, off, facetEntries, entryKeys, facetBuffer)
+                //toImpact environment_impact_level_tags
                 facetsCount = facetBuffer.length - facetsCount
                 if (facetsCount > 0) {
                     trunkWithFacetCount++
                     if (facetBuffer.length >= bufferSize) {
                         writenFacets += facetBuffer.length
-                        await facets.bulkWrite(facetBuffer, {ordered: false})
+                        facetSend(facetBuffer)
                         facetBuffer = []
                     }
 
                     let trunk = toTrunk(_id, off, quantity, oid, c0)
                     trunkBuffer.push(trunk)
                     if (trunkBuffer.length === bufferSize) {
-                        await trunks.bulkWrite(trunkBuffer, {ordered: false})
+                        trunkSend(trunkBuffer)
                         trunkBuffer = []
                     }
                 }
@@ -81,12 +80,14 @@ export const offImport = async ([offDb, bfDb]) => {
     debug("FINAL write %o facetsCount", facetBuffer.length)
     if (facetBuffer.length > 0) {
         writenFacets += facetBuffer.length
-        await facets.bulkWrite(facetBuffer, {ordered: false})
+        facetSend(facetBuffer)
     }
 
     debug("FINAL write %o trunks", trunkBuffer.length)
     if (trunkBuffer.length > 0) {
-        await trunks.bulkWrite(trunkBuffer, {ordered: false})
+        trunkSend(trunkBuffer)
     }
     debug("FINAL counts: offs=%o trunks=%o trunkWFacets=%o writenFacets=%o", offCount, trunkCount, trunkWithFacetCount, writenFacets)
 }
+
+
