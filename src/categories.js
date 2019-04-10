@@ -1,23 +1,54 @@
-import {getCatId, getOffCategories} from "./api"
 import ENV from "./env"
+import http from "request-promise-native"
+import {createObjectId} from 'mongo-registry'
+import {getRandomColor} from "./color"
+
 
 const debug = require('debug')('api:off-import')
+
+export const getOffCat = (offUserId) =>
+    ENV.DB.cats.findOne({oid: offUserId, name: "Open Food Fact", pid: null})
+        .then(offCat => {
+            if (!offCat) {
+                offCat = {_id: createObjectId(), oid: offUserId, pid: null, name: "Open Food Fact", color: "#c99622"}
+                ENV.DB.cats.insertOne(offCat)
+            }
+            return offCat._id
+        })
+
+export const getOffCategories = () => http.get("https://world.openfoodfacts.org/data/taxonomies/categories.json", {json: true})
+
+const catsIdCache = {}
+const getCatId = async externId => {
+    if (catsIdCache[externId]) {
+        return catsIdCache[externId]
+    } else {
+        const cat = await ENV.DB.cats.findOne({externId}, {projection: {_id: 1}})
+        if (cat) {
+            catsIdCache[externId] = cat._id
+        } else {
+            catsIdCache[externId] = createObjectId()
+        }
+    }
+    return catsIdCache[externId]
+}
 
 export const importCategories = async (c0) => {
     debug("downloading off categories...")
     const cats = (await getOffCategories())
     debug("downloading off categories OK")
     for (let k in cats) {
-        const doc = await bfCat(c0, k, cats[k])
+        const doc = await bfCatEntry(c0, k, cats[k])
         ENV.DB.cats.updateOne({_id: doc._id}, {$set: doc}, {upsert: true})
     }
 }
 
-const bfCat = async (c0, externId, offCat) => {
+const bfCatEntry = async (c0, externId, offCat) => {
     const bfCat = {
         externId,
         _id: await getCatId(externId),
         name: offCat.name.fr || offCat.name.en || offCat.name.it || offCat.name.es || offCat.name.de || offCat.name.nl || offCat.name.ru,
+        color: getRandomColor()
     }
     if (offCat.parents) {
         bfCat.pids = []
@@ -33,4 +64,10 @@ const bfCat = async (c0, externId, offCat) => {
     //_id, externId, wikidata, pids[], name
     //abandonné: instanceof (AOP, IGP), region (fr:'Bourgogne'), country: { en: 'Italy' }, pnns_group_2: { en: 'nuts' }
     return bfCat
+}
+
+export const toCats = (c0, off) => {
+    const cats = off.categories_tags && off.categories_tags.map(externId => catsIdCache[externId]) || []
+    cats.unshift(c0)
+    return cats
 }

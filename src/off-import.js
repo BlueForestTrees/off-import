@@ -1,11 +1,11 @@
 import {toBqt} from "./quantity"
-import {toTrunk} from "./trunk"
+import {getTrunkId, toTrunk} from "./trunk"
 import {toFacets} from "./facet"
-import {getImpactCO2Entry, getOffCat, getOffUserId, getTrunkId} from "./api"
 import {importFacetEntries} from "./entries"
 import ENV from './env'
-import {importCategories} from "./categories"
-import {toImpacts} from "./impact"
+import {getOffCat, importCategories} from "./categories"
+import {getImpactCO2Entry, toImpacts} from "./impact"
+import {getOffUserId} from "./user"
 
 const debug = require('debug')('api:off-import')
 
@@ -33,6 +33,8 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
     if (ENV.PAGE === 0) {
         debug("categories...")
         await importCategories(c0)
+    }else{
+        debug("no categories catalog import since PAGE > 0")
     }
 
     debug("off trunks...")
@@ -66,8 +68,8 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
                     const trunkId = await getTrunkId(offTrunk)
 
                     const trunk = toTrunk(trunkId, offTrunk, quantity, oid, c0)
-                    const facets = toFacets(quantity, trunkId, offTrunk, facetEntries, entryKeys)
-                    const impacts = toImpacts(quantity, trunkId, impactCO2Id, offTrunk)
+                    const facets = await toFacets(quantity, trunkId, offTrunk, facetEntries, entryKeys)
+                    const impacts = await toImpacts(quantity, trunkId, impactCO2Id, offTrunk)
 
                     if (facets.length || impacts.length) {
                         trunkCount++

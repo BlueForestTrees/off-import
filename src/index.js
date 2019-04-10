@@ -32,6 +32,7 @@ export default initRabbit(ENV.RB)
                     .then(client => {
                         const bfDb = client.db(ENV.DB_NAME)
                         ENV.DB.trunks = bfDb.collection(cols.TRUNK)
+                        ENV.DB.impacts = bfDb.collection(cols.IMPACT)
                         ENV.DB.impactEntry = bfDb.collection(cols.IMPACT_ENTRY)
                         ENV.DB.facets = bfDb.collection(cols.FACET)
                         ENV.DB.facetEntry = bfDb.collection(cols.FACET_ENTRY)
