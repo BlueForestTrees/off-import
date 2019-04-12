@@ -75,9 +75,9 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
                         trunkCount++
                         facetCount += facets.length
                         impactCount += impacts.length
-                        trunkSend(trunk)
-                        facetSend(facets)
-                        impactSend(impacts)
+                        await trunkSend(trunk)
+                        await facetSend(facets)
+                        await impactSend(impacts)
                     }
                 }
             } else {

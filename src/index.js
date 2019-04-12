@@ -10,7 +10,7 @@ import {cols} from "./collections"
 const authOff = ENV => (ENV.DB_USER_OFF && ENV.DB_PWD_OFF) ? (ENV.DB_USER_OFF + ":" + ENV.DB_PWD_OFF + "@") : ""
 const auth = ENV => (ENV.DB_USER && ENV.DB_PWD) ? (ENV.DB_USER + ":" + ENV.DB_PWD + "@") : ""
 
-const multiSend = send => msgs => msgs.forEach(msg => send(msg))
+const multiSend = send => msgs => Promise.all(msgs.map(async msg => await send(msg)))
 
 export default initRabbit(ENV.RB)
     .then(async () => Promise
