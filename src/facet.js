@@ -21,7 +21,8 @@ export const toFacets = async (quantity, trunkId, off, entries, keys) => {
             // debug("%o tid=%o fid=%o eid=%o g/100g=%o bqt=%o %o", off._id, trunkId, facetId, externId, _100g, bqt, quantity)
             const bqt = quantity.g === "Mass" ? _100g * 0.01 : _100g * 10
             const _id = await getFacetId(trunkId, facetId)
-            facets.push({_id, trunkId, facetId, bqt})
+            const dateUpdate = new Date()
+            facets.push({_id, trunkId, facetId, bqt, dateUpdate})
         }
     }
     return facets

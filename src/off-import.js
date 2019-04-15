@@ -43,7 +43,7 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
     debug("skip %o limit %o...", from, count)
 
     const offFields = {lc: 1, images: 1, code: 1, stores: 1, countries_tags: 1, last_modified_t: 1, quantity: 1, nutriments: 1, product_name: 1, generic_name: 1}
-    let bufferSize = 20000
+    let bufferSize = 2000
     let offCount = 0
     let trunkCount = 0
     let facetCount = 0

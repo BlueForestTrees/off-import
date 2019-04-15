@@ -13,7 +13,7 @@ const auth = ENV => (ENV.DB_USER && ENV.DB_PWD) ? (ENV.DB_USER + ":" + ENV.DB_PW
 const multiSend = send => msgs => Promise.all(msgs.map(async msg => await send(msg)))
 
 export default initRabbit(ENV.RB)
-    .then(async () => Promise
+    .then(() => Promise
         .all([
 
             Promise.resolve(ENV.DB_CONNECTION_STRING_OFF || `mongodb://${authOff(ENV)}${ENV.DB_HOST_OFF}:${ENV.DB_PORT_OFF}/${ENV.DB_NAME_OFF}`)
@@ -41,9 +41,9 @@ export default initRabbit(ENV.RB)
                     }))
                 .catch(e => console.error("connexion BF", e)),
 
-            Promise.resolve(await createSender(ENV.RB.exchange, ENV.RK_TRUNK_UPSERT)),
-            Promise.resolve(multiSend(await createSender(ENV.RB.exchange, ENV.RK_FACET_UPSERT))),
-            Promise.resolve(multiSend(await createSender(ENV.RB.exchange, ENV.RK_IMPACT_UPSERT)))
+            Promise.resolve(createSender(ENV.RB.exchange, ENV.RK_TRUNK_UPSERT)),
+            Promise.resolve(multiSend(createSender(ENV.RB.exchange, ENV.RK_FACET_UPSERT))),
+            Promise.resolve(multiSend(createSender(ENV.RB.exchange, ENV.RK_IMPACT_UPSERT)))
         ])
         .then(offImport)
         .catch(console.error)

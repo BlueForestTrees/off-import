@@ -30,8 +30,8 @@ const ENV = {
     RK_IMPACT_UPSERT: process.env.RK_FACET_UPSERT || "impact-upsert",
     RB_PATH: process.env.RB_PATH || "mq.json",
 
-    PAGE_SIZE: process.env.PAGE_SIZE || 9999999999,
-    PAGE: process.env.PAGE || 0
+    PAGE_SIZE: process.env.PAGE_SIZE && parseInt(process.env.PAGE_SIZE) || 9999999999,
+    PAGE: process.env.PAGE && parseInt(process.env.PAGE) || 0
 }
 
 ENV.RB = JSON.parse(fs.readFileSync(ENV.RB_PATH, 'utf8'))

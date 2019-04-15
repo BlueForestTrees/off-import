@@ -1,3 +1,5 @@
+#sur la base mongo temporaire: db.adminCommand( { "setParameter": 1, "wiredTigerEngineRuntimeConfig": "cache_size=1G"})
+
 #script ci-dessous à lancer dans import-mongo pour maj la base off. Ensuite tail -f import.log
 #cat > import.sh
 #chmod +x import.sh

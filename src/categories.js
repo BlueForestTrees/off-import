@@ -48,7 +48,8 @@ const bfCatEntry = async (c0, externId, offCat) => {
         externId,
         _id: await getCatId(externId),
         name: offCat.name.fr || offCat.name.en || offCat.name.it || offCat.name.es || offCat.name.de || offCat.name.nl || offCat.name.ru,
-        color: getRandomColor()
+        color: getRandomColor(),
+        dateUpdate: new Date()
     }
     if (offCat.parents) {
         bfCat.pids = []
