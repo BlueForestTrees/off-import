@@ -33,7 +33,7 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
     if (ENV.PAGE === 0) {
         debug("categories...")
         await importCategories(c0)
-    }else{
+    } else {
         debug("no categories catalog import since PAGE > 0")
     }
 
@@ -49,7 +49,9 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
     let facetCount = 0
     let impactCount = 0
     let noQtCount = 0
+    let qtNoMatch = 0
     let noIdCount = 0
+    let noFacetImpact = 0
 
     const cursor = ENV.DB.off
         .find(JSON.parse(ENV.IMPORT_FILTER), offFields)
@@ -57,9 +59,8 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
 
     while (await cursor.hasNext()) {
         const offTrunk = await cursor.next()
-        offCount++
         if (offCount % bufferSize === 0) {
-            debug("offs=%o trunks=%o (%o/%O) facetCount=%o impactCount=%o", offCount, trunkCount, noQtCount, noIdCount, facetCount, impactCount)
+            debug("%o trunks, %o no qt, %o qtNoMatch, %o no _id, %o noFacetImpact, in %o lines. %o facets, %o impacts", trunkCount, noQtCount, qtNoMatch, noIdCount, noFacetImpact, offCount, facetCount, impactCount)
         }
         if (offTrunk.quantity != null) {
             if (offTrunk._id.length === 13) {
@@ -72,13 +73,17 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
                     const impacts = await toImpacts(quantity, trunkId, impactCO2Id, offTrunk)
 
                     if (facets.length || impacts.length) {
-                        trunkCount++
                         facetCount += facets.length
                         impactCount += impacts.length
                         await trunkSend(trunk)
                         await facetSend(facets)
                         await impactSend(impacts)
+                        trunkCount++
+                    } else {
+                        noFacetImpact++
                     }
+                } else {
+                    qtNoMatch++
                 }
             } else {
                 noIdCount++
@@ -86,8 +91,9 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
         } else {
             noQtCount++
         }
+        offCount++
     }
-    debug("FINAL counts: offs=%o trunks=%o (%o/%O) facetCount=%o impactCount=%o", offCount, trunkCount, noQtCount, noIdCount, facetCount, impactCount)
+    debug("FINAL %o trunks, %o no qt, %o qtNoMatch, %o no _id, %o noFacetImpact, in %o lines. %o facets, %o impacts", trunkCount, noQtCount, qtNoMatch, noIdCount, noFacetImpact, offCount, facetCount, impactCount)
 }
 
 

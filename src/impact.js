@@ -6,7 +6,7 @@ export const toImpacts = async (quantity, trunkId, impactId, off) => {
     const co2 = off.nutriments && off.nutriments["carbon-footprint-from-meat-or-fish_product"]
     if (co2) {
         const bqt = co2 / quantity.bqt / 1000
-        const _id = await getImpactId()
+        const _id = await getImpactId(trunkId, impactId)
         const dateUpdate = new Date()
         impacts.push({_id, trunkId, impactId, bqt, dateUpdate})
     }
