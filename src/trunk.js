@@ -4,7 +4,7 @@ import {toCats} from "./categories"
 import ENV from "./env"
 import {createObjectId} from 'mongo-registry'
 
-export const toTrunk = (_id, off, quantity, oid, c0) => ({
+export const toTrunk = (_id, off, quantity, oid, c0)
     _id,
     externId: off._id,
     origin: "off",
