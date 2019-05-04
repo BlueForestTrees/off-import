@@ -43,7 +43,7 @@ export default initRabbit(ENV.RB)
 
             Promise.resolve(createSender(ENV.RB.exchange, ENV.RK_TRUNK_UPSERT)),
             Promise.resolve(multiSend(createSender(ENV.RB.exchange, ENV.RK_FACET_UPSERT))),
-            Promise.resolve(multiSend(createSender(ENV.RB.exchange, ENV.RK_IMPACT_UPSERT)))
+            Promise.resolve(multiSend(createSender(ENV.RB.exchange, ENV.RK_IMPACT_TANK_UPSERT)))
         ])
         .then(offImport)
         .then(() => process.exit(0))
