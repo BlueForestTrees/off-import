@@ -30,6 +30,8 @@ const ENV = {
     RK_IMPACT_TANK_UPSERT: process.env.RK_IMPACT_TANK_UPSERT || "impactTank-upsert",
     RB_PATH: process.env.RB_PATH || "mq.json",
 
+    PAGE_LOG: process.env.PAGE_LOG && parseInt(process.env.PAGE_LOG) || 200,
+
     PAGE_SIZE: process.env.PAGE_SIZE && parseInt(process.env.PAGE_SIZE) || 9999999999,
     PAGE: process.env.PAGE && parseInt(process.env.PAGE) || 0
 }
