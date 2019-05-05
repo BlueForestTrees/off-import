@@ -30,17 +30,13 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
     const facetEntries = (await ENV.DB.facetEntry.find({}).toArray()).reduce((res, fe) => (res[fe.externId] = fe) && res, {})
     let entryKeys = Object.keys(facetEntries)
 
-    if (ENV.PAGE === 0) {
+    if (ENV.SKIP === 0) {
         debug("categories...")
         await importCategories(c0)
     } else {
-        debug("no categories catalog import since PAGE > 0")
+        debug("no categories catalog import since SKIP > 0")
     }
 
-    debug("off trunks...")
-    const from = ENV.PAGE_SIZE * ENV.PAGE
-    const count = ENV.PAGE_SIZE
-    debug("skip %o limit %o...", from, count)
 
     const offFields = {lc: 1, images: 1, code: 1, stores: 1, countries_tags: 1, last_modified_t: 1, quantity: 1, nutriments: 1, product_name: 1, generic_name: 1}
     let offCount = 0
@@ -52,13 +48,14 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
     let noIdCount = 0
     let noFacetImpact = 0
 
+    debug("off.find({}).skip(%o).limit(%o)...", ENV.SKIP, ENV.LIMIT)
     const cursor = ENV.DB.off
         .find(JSON.parse(ENV.IMPORT_FILTER), offFields)
-        .skip(from).limit(count)
+        .skip(ENV.SKIP).limit(ENV.LIMIT)
 
     while (await cursor.hasNext()) {
         const offTrunk = await cursor.next()
-        if (offCount % ENV.PAGE_LOG === 0) {
+        if (offCount % ENV.LOG_EVERY === 0) {
             debug("%o trunks, %o no qt, %o qtNoMatch, %o no _id, %o noFacetImpact, in %o lines. %o facets, %o impacts", trunkCount, noQtCount, qtNoMatch, noIdCount, noFacetImpact, offCount, facetCount, impactCount)
         }
         if (offTrunk.quantity != null) {
