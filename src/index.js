@@ -7,7 +7,9 @@ import mongodb from 'mongodb'
 import ENV from './env'
 import {cols} from "./collections"
 
-const authOff = ENV => (ENV.DB_USER_OFF && ENV.DB_PWD_OFF) ? (ENV.DB_USER_OFF + ":" + ENV.DB_PWD_OFF + "@") : ""
+const bsonCursor = path => {
+    return path
+}
 const auth = ENV => (ENV.DB_USER && ENV.DB_PWD) ? (ENV.DB_USER + ":" + ENV.DB_PWD + "@") : ""
 
 const multiSend = send => msgs => Promise.all(msgs.map(async msg => await send(msg)))
@@ -16,15 +18,7 @@ export default initRabbit(ENV.RB)
     .then(() => Promise
         .all([
 
-            Promise.resolve(ENV.DB_CONNECTION_STRING_OFF || `mongodb://${authOff(ENV)}${ENV.DB_HOST_OFF}:${ENV.DB_PORT_OFF}/${ENV.DB_NAME_OFF}`)
-                .then(connChain => debug(`OFF: ${connChain}`) || connChain)
-                .then(connChain => mongodb.MongoClient.connect(connChain, {useNewUrlParser: true})
-                    .then(client => {
-                        const offDb = client.db(ENV.DB_NAME_OFF)
-                        ENV.DB.off = offDb.collection(cols.OFF)
-                        return offDb
-                    }))
-                .catch(e => console.error("connexion OFF", e)),
+            bsonCursor(ENV.PRODUCT_PATH),
 
             Promise.resolve(ENV.DB_CONNECTION_STRING || `mongodb://${auth(ENV)}${ENV.DB_HOST}:${ENV.DB_PORT}/${ENV.DB_NAME}?authSource=admin`)
                 .then(connChain => debug(`BF: ${connChain}`) || connChain)

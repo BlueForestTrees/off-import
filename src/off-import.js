@@ -30,15 +30,13 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
     const facetEntries = (await ENV.DB.facetEntry.find({}).toArray()).reduce((res, fe) => (res[fe.externId] = fe) && res, {})
     let entryKeys = Object.keys(facetEntries)
 
-    if (ENV.SKIP === 0) {
+    if (ENV.NO_CAT === true) {
         debug("categories...")
         await importCategories(c0)
     } else {
-        debug("no categories catalog import since SKIP > 0")
+        debug("no categories catalog import since NO_CAT !== true")
     }
 
-
-    const offFields = {lc: 1, images: 1, code: 1, stores: 1, countries_tags: 1, last_modified_t: 1, quantity: 1, nutriments: 1, product_name: 1, generic_name: 1}
     let offCount = 0
     let trunkCount = 0
     let facetCount = 0
@@ -47,11 +45,6 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
     let qtNoMatch = 0
     let noIdCount = 0
     let noFacetImpact = 0
-
-    debug("off.find({}).skip(%o).limit(%o)...", ENV.SKIP, ENV.LIMIT)
-    const cursor = ENV.DB.off
-        .find(JSON.parse(ENV.IMPORT_FILTER), offFields)
-        .skip(ENV.SKIP).limit(ENV.LIMIT)
 
     while (await cursor.hasNext()) {
         const offTrunk = await cursor.next()
