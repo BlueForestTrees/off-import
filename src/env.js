@@ -2,6 +2,8 @@ const debug = require('debug')('api:off-import')
 import {version, name} from './../package.json'
 import fs from 'fs'
 
+const defined = v => v !== null && v !== undefined
+
 const ENV = {
     NAME: name,
 
@@ -31,8 +33,8 @@ const ENV = {
     RB_PATH: process.env.RB_PATH || "mq.json",
 
     LOG_EVERY: process.env.LOG_EVERY && parseInt(process.env.LOG_EVERY) || 200,
-    SKIP: process.env.SKIP && parseInt(process.env.SKIP) || 0,
-    LIMIT: process.env.LIMIT && parseInt(process.env.LIMIT) || 100000
+    SKIP: defined(process.env.SKIP) && parseInt(process.env.SKIP) || 0,
+    LIMIT: defined(process.env.LIMIT) && parseInt(process.env.LIMIT) || 100000
 }
 
 ENV.RB = JSON.parse(fs.readFileSync(ENV.RB_PATH, 'utf8'))
