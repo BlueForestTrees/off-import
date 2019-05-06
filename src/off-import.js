@@ -9,7 +9,7 @@ import {getOffUserId} from "./user"
 
 const debug = require('debug')('api:off-import')
 
-export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend]) => {
+export const offImport = async ([offSource, bfDb, trunkSend, facetSend, impactSend]) => {
     debug("get impact CO2 entry")
     const impactCO2Entry = await getImpactCO2Entry()
     if (!impactCO2Entry) {
@@ -46,8 +46,7 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
     let noIdCount = 0
     let noFacetImpact = 0
 
-    while (await cursor.hasNext()) {
-        const offTrunk = await cursor.next()
+    const readOffdoc = async offTrunk => {
         if (offCount % ENV.LOG_EVERY === 0) {
             debug("%o trunks, %o no qt, %o qtNoMatch, %o no _id, %o noFacetImpact, in %o lines. %o facets, %o impacts", trunkCount, noQtCount, qtNoMatch, noIdCount, noFacetImpact, offCount, facetCount, impactCount)
         }
@@ -82,7 +81,21 @@ export const offImport = async ([offDb, bfDb, trunkSend, facetSend, impactSend])
         }
         offCount++
     }
-    debug("FINAL %o trunks, %o no qt, %o qtNoMatch, %o no _id, %o noFacetImpact, in %o lines. %o facets, %o impacts", trunkCount, noQtCount, qtNoMatch, noIdCount, noFacetImpact, offCount, facetCount, impactCount)
+
+    const read = () => offSource.read()
+    let end = new Promise((accept, reject) => {
+        offSource.on('data', doc => {
+            if (doc) {
+                readOffdoc(doc).then(read).catch(console.error)
+            } else {
+                debug("FINAL: %o trunks, %o no qt, %o qtNoMatch, %o no _id, %o noFacetImpact, in %o lines. %o facets, %o impacts", trunkCount, noQtCount, qtNoMatch, noIdCount, noFacetImpact, offCount, facetCount, impactCount)
+                accept()
+            }
+        })
+        offSource.on('error', reject)
+    })
+
+    offSource.read()
+
+    await end
 }
-
-

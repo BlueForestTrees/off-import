@@ -1,15 +1,13 @@
 import {offImport} from "./off-import"
 import {createSender, initRabbit} from "simple-rbmq"
-
-const debug = require('debug')('api:off-import')
-
 import mongodb from 'mongodb'
 import ENV from './env'
 import {cols} from "./collections"
+import fs from 'fs'
+import BSONStream from 'bson-stream'
 
-const bsonCursor = path => {
-    return path
-}
+const debug = require('debug')('api:off-import')
+
 const auth = ENV => (ENV.DB_USER && ENV.DB_PWD) ? (ENV.DB_USER + ":" + ENV.DB_PWD + "@") : ""
 
 const multiSend = send => msgs => Promise.all(msgs.map(async msg => await send(msg)))
@@ -18,7 +16,7 @@ export default initRabbit(ENV.RB)
     .then(() => Promise
         .all([
 
-            bsonCursor(ENV.PRODUCT_PATH),
+            fs.createReadStream(ENV.PRODUCT_PATH).pipe(new BSONStream()),
 
             Promise.resolve(ENV.DB_CONNECTION_STRING || `mongodb://${auth(ENV)}${ENV.DB_HOST}:${ENV.DB_PORT}/${ENV.DB_NAME}?authSource=admin`)
                 .then(connChain => debug(`BF: ${connChain}`) || connChain)

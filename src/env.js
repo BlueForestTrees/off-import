@@ -5,7 +5,7 @@ import fs from 'fs'
 const ENV = {
     NAME: name,
 
-    PRODUCT_PATH: "",
+    PRODUCT_PATH: "C:\\Users\\slim\\Downloads\\openfoodfacts-mongodbdump.tar\\openfoodfacts-mongodbdump\\dump\\off\\products.bson",
     NO_CAT: (process.env.NO_CAT && Boolean(process.env.NO_CAT)) || false,
 
     DB: {},
@@ -25,7 +25,7 @@ const ENV = {
     RK_IMPACT_TANK_UPSERT: process.env.RK_IMPACT_TANK_UPSERT || "impactTank-upsert",
     RB_PATH: process.env.RB_PATH || "mq.json",
 
-    LOG_EVERY: process.env.LOG_EVERY && parseInt(process.env.LOG_EVERY) || 200,
+    LOG_EVERY: process.env.LOG_EVERY && parseInt(process.env.LOG_EVERY) || 5000,
 }
 
 ENV.RB = JSON.parse(fs.readFileSync(ENV.RB_PATH, 'utf8'))
