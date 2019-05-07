@@ -20,7 +20,7 @@ wget -O off.tar.gz https://world.openfoodfacts.org/data/openfoodfacts-mongodbdum
 
 #extract
 echo "tar -zxvf off.tar.gz"
-tar -zxvf off.tar.gz --totals
+tar -zxvf off.tar.gz --verbose --verbose
 
 #clean download
 echo "rm off.tar.gz"

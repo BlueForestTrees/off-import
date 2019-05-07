@@ -48,7 +48,7 @@ export const offImport = async ([offSource, bfDb, trunkSend, facetSend, impactSe
 
     const readOffdoc = async offTrunk => {
         if (offCount % ENV.LOG_EVERY === 0) {
-            debug("%o trunks, %o no qt, %o qtNoMatch, %o no _id, %o noFacetImpact, in %o lines. %o facets, %o impacts", trunkCount, noQtCount, qtNoMatch, noIdCount, noFacetImpact, offCount, facetCount, impactCount)
+            debug("%o lines, %o trunks, %o no qt, %o qtNoMatch, %o no _id, %o noFacetImpact; %o facets, %o impacts", offCount, trunkCount, noQtCount, qtNoMatch, noIdCount, noFacetImpact, facetCount, impactCount)
         }
         if (offTrunk.quantity != null) {
             if (offTrunk._id.length === 13) {
@@ -88,7 +88,7 @@ export const offImport = async ([offSource, bfDb, trunkSend, facetSend, impactSe
             if (doc) {
                 readOffdoc(doc).then(read).catch(console.error)
             } else {
-                debug("FINAL: %o trunks, %o no qt, %o qtNoMatch, %o no _id, %o noFacetImpact, in %o lines. %o facets, %o impacts", trunkCount, noQtCount, qtNoMatch, noIdCount, noFacetImpact, offCount, facetCount, impactCount)
+                debug("FINAL %o lines, %o trunks, %o no qt, %o qtNoMatch, %o no _id, %o noFacetImpact; %o facets, %o impacts", offCount, trunkCount, noQtCount, qtNoMatch, noIdCount, noFacetImpact, facetCount, impactCount)
                 accept()
             }
         })

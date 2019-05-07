@@ -5,7 +5,7 @@ import fs from 'fs'
 const ENV = {
     NAME: name,
 
-    PRODUCT_PATH: "C:\\Users\\slim\\Downloads\\openfoodfacts-mongodbdump.tar\\openfoodfacts-mongodbdump\\dump\\off\\products.bson",
+    PRODUCT_PATH: process.env.PRODUCT_PATH || "C:\\Users\\slim\\Downloads\\openfoodfacts-mongodbdump.tar\\openfoodfacts-mongodbdump\\dump\\off\\products.bson",
     NO_CAT: (process.env.NO_CAT && Boolean(process.env.NO_CAT)) || false,
 
     DB: {},
