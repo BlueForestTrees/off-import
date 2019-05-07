@@ -13,7 +13,7 @@ const auth = ENV => (ENV.DB_USER && ENV.DB_PWD) ? (ENV.DB_USER + ":" + ENV.DB_PW
 const multiSend = send => msgs => Promise.all(msgs.map(async msg => await send(msg)))
 
 export default initRabbit(ENV.RB)
-    .then(() => Promise
+    .then(async () => Promise
         .all([
 
             fs.createReadStream(ENV.PRODUCT_PATH).pipe(new BSONStream()),
@@ -33,9 +33,9 @@ export default initRabbit(ENV.RB)
                     }))
                 .catch(e => console.error("connexion BF", e)),
 
-            Promise.resolve(createSender(ENV.RB.exchange, ENV.RK_TRUNK_UPSERT)),
-            Promise.resolve(multiSend(createSender(ENV.RB.exchange, ENV.RK_FACET_UPSERT))),
-            Promise.resolve(multiSend(createSender(ENV.RB.exchange, ENV.RK_IMPACT_TANK_UPSERT)))
+            Promise.resolve(await createSender(ENV.RB.exchange, ENV.RK_TRUNK_UPSERT)),
+            Promise.resolve(multiSend(await createSender(ENV.RB.exchange, ENV.RK_FACET_UPSERT))),
+            Promise.resolve(multiSend(await createSender(ENV.RB.exchange, ENV.RK_IMPACT_TANK_UPSERT)))
         ])
         .then(offImport)
         .then(() => process.exit(0))
