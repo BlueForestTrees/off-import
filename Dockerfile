@@ -4,4 +4,4 @@ COPY . .
 RUN yarn install && yarn build
 
 FROM node:alpine
-COPY --from=build /app/dist /
+COPY --from=build /dist /
