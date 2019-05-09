@@ -9,4 +9,4 @@ echo "tar -zxvf off.tar.gz"
 tar -zxvf off.tar.gz
 
 #run
-node /dist/index.js
+node dist/index.js
