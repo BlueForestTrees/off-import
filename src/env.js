@@ -23,7 +23,7 @@ const ENV = {
     RK_TRUNK_UPSERT: process.env.RK_TRUNK_UPSERT || "trunk-upsert",
     RK_FACET_UPSERT: process.env.RK_FACET_UPSERT || "facet-upsert",
     RK_IMPACT_TANK_UPSERT: process.env.RK_IMPACT_TANK_UPSERT || "impactTank-upsert",
-    RB_PATH: process.env.RB_PATH || "mq.json",
+    RB_PATH: process.env.RB_PATH || "/mq.json",
 
     LOG_EVERY: process.env.LOG_EVERY && parseInt(process.env.LOG_EVERY) || 5000,
 }
