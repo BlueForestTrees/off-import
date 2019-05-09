@@ -9,3 +9,4 @@ COPY --from=build /dist ./dist
 COPY --from=build /package.json ./
 COPY --from=build /node_modules ./node_modules
 COPY --from=build /off-import.sh ./
+RUN chmod +x ./off-import.sh
