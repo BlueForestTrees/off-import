@@ -1,7 +1,7 @@
 import {toBqt} from "./quantity"
 import {getTrunkId, toTrunk} from "./trunk"
 import {toFacets} from "./facet"
-import {importFacetEntries} from "./entries"
+import importFacetEntries from "./facetEntries"
 import ENV from './env'
 import {getOffCat, importCategories} from "./categories"
 import {getImpactCO2Entry, toImpacts} from "./impact"
