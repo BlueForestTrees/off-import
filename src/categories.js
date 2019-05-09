@@ -34,13 +34,22 @@ const getCatId = async externId => {
 }
 
 export const importCategories = async (c0) => {
-    debug("downloading off categories...")
+    debug("download off categories...")
     const cats = (await getOffCategories())
-    debug("downloading off categories OK")
+    debug("transform off categories...")
+    const writes = []
     for (let k in cats) {
         const doc = await bfCatEntry(c0, k, cats[k])
-        ENV.DB.cats.updateOne({_id: doc._id}, {$set: doc}, {upsert: true})
+        writes.push({
+            updateOne: {
+                filter: {_id: doc._id},
+                update: {$set: doc},
+                upsert: true
+            }
+        })
     }
+    debug("write bf categories..")
+    return ENV.DB.cats.bulkWrite(writes, {ordered: false})
 }
 
 const bfCatEntry = async (c0, externId, offCat) => {

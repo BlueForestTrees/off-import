@@ -31,10 +31,10 @@ export const offImport = async ([offSource, bfDb, trunkSend, facetSend, impactSe
     let entryKeys = Object.keys(facetEntries)
 
     if (ENV.NO_CAT === true) {
+        debug("no categories catalog import since NO_CAT === true")
+    } else {
         debug("categories...")
         await importCategories(c0)
-    } else {
-        debug("no categories catalog import since NO_CAT !== true")
     }
 
     let offCount = 0

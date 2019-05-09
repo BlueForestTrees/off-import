@@ -1,6 +1,6 @@
 {
   "name": "off-import",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "service d'import OFF",
   "main": "src/index.js",
   "repository": "https://github.com/BlueForestTrees/api-import.git",
