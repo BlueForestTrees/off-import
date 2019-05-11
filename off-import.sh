@@ -8,5 +8,11 @@ wget -O off.tar.gz https://world.openfoodfacts.org/data/openfoodfacts-mongodbdum
 echo "tar -zxvf off.tar.gz"
 tar -zxvf off.tar.gz
 
+#remove download
+rm off.tar.gz
+
 #run
 node dist/index.js
+
+#remove tar
+rm -rf dump

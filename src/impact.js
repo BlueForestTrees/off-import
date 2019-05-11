@@ -14,7 +14,7 @@ export const toImpacts = async (quantity, trunkId, impactId, off) => {
 }
 
 export const getImpactId = async (trunkId, impactId) => {
-    const impact = await ENV.DB.impacts.findOne({trunkId, impactId}, {projection: {_id: 1}})
+    const impact = await ENV.DB.impactTank.findOne({trunkId, impactId}, {projection: {_id: 1}})
     return impact ? impact._id : createObjectId()
 }
 

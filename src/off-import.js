@@ -9,7 +9,7 @@ import {getOffUserId} from "./user"
 
 const debug = require('debug')('api:off-import')
 
-export const offImport = async ([offSource, bfDb, trunkSend, facetSend, impactSend]) => {
+export const offImport = async ({offStream, sendTrunk, sendFacet, sendImpactTank}) => {
     debug("get impact CO2 entry")
     const impactCO2Entry = await getImpactCO2Entry()
     if (!impactCO2Entry) {
@@ -56,6 +56,7 @@ export const offImport = async ([offSource, bfDb, trunkSend, facetSend, impactSe
                 if (quantity) {
                     const trunkId = await getTrunkId(offTrunk)
 
+
                     const trunk = toTrunk(trunkId, offTrunk, quantity, oid, c0)
                     const facets = await toFacets(quantity, trunkId, offTrunk, facetEntries, entryKeys)
                     const impacts = await toImpacts(quantity, trunkId, impactCO2Id, offTrunk)
@@ -63,9 +64,9 @@ export const offImport = async ([offSource, bfDb, trunkSend, facetSend, impactSe
                     if (facets.length || impacts.length) {
                         facetCount += facets.length
                         impactCount += impacts.length
-                        await trunkSend(trunk)
-                        await facetSend(facets)
-                        await impactSend(impacts)
+                        await sendTrunk(trunk)
+                        await sendFacet(facets)
+                        await sendImpactTank(impacts)
                         trunkCount++
                     } else {
                         noFacetImpact++
@@ -82,9 +83,9 @@ export const offImport = async ([offSource, bfDb, trunkSend, facetSend, impactSe
         offCount++
     }
 
-    const read = () => offSource.read()
+    const read = () => offStream.read()
     let end = new Promise((accept, reject) => {
-        offSource.on('data', doc => {
+        offStream.on('data', doc => {
             if (doc) {
                 readOffdoc(doc).then(read).catch(console.error)
             } else {
@@ -92,10 +93,10 @@ export const offImport = async ([offSource, bfDb, trunkSend, facetSend, impactSe
                 accept()
             }
         })
-        offSource.on('error', reject)
+        offStream.on('error', reject)
     })
 
-    offSource.read()
+    offStream.read()
 
     await end
 }
