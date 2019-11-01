@@ -31,7 +31,7 @@
     "bson-stream": "0.0.8",
     "cross-env": "5.2.0",
     "debug": "3.1.0",
-    "lodash": "4.17.10",
+    "lodash": "4.17.13",
     "mongo-registry": "1.0.15",
     "request": "2.88.0",
     "request-promise-native": "1.0.5",
